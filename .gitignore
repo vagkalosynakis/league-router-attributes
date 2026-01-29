@@ -1,0 +1,61 @@
+# Composer
+/vendor/
+composer.lock
+
+# OpenSpec
+/openspec/
+
+# PHPStorm / IntelliJ IDEA
+.idea/
+
+# VS Code
+.vscode/
+
+# Cursor
+.cursor/
+
+# PHP CS Fixer
+.php_cs.cache
+.php-cs-fixer.cache
+
+# PHPUnit
+.phpunit.result.cache
+/phpunit.xml
+/coverage/
+/build/
+
+# PHPStan
+.phpstan.cache
+
+# Psalm
+.psalm/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# OS Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+*~
+
+# Cache directories
+*.cache
+/cache/
+/tmp/
+
+# Logs
+*.log
+/logs/
+
+# Backup files
+*.bak
+*.swp
+*.swo
+*~
