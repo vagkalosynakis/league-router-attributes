@@ -11,8 +11,9 @@ composer.lock
 # VS Code
 .vscode/
 
-# Cursor
+# AI tools
 .cursor/
+AGENTS.md
 
 # PHP CS Fixer
 .php_cs.cache
