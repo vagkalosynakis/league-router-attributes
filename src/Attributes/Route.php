@@ -40,7 +40,7 @@ class Route
         public array $method,
         public string $path,
         public ?string $prefix = null,
-        public ?string $name = null
+        public ?string $name = null,
     ) {
     }
 }

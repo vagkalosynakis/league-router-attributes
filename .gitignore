@@ -1,6 +1,7 @@
 # Composer
 /vendor/
 composer.lock
+composer.lock
 
 # OpenSpec
 /openspec/
@@ -13,7 +14,6 @@ composer.lock
 
 # AI tools
 .cursor/
-AGENTS.md
 
 # PHP CS Fixer
 .php_cs.cache
@@ -21,7 +21,6 @@ AGENTS.md
 
 # PHPUnit
 .phpunit.result.cache
-/phpunit.xml
 /coverage/
 /build/
 

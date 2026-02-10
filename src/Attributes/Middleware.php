@@ -37,7 +37,7 @@ class Middleware
      * @param array<string> $middlewareClasses Array of fully-qualified middleware class names
      */
     public function __construct(
-        public array $middlewareClasses
+        public array $middlewareClasses,
     ) {
     }
 }

@@ -33,8 +33,9 @@ class RouteDiscovery
 
     public function __construct(
         private Router $router,
-        private ContainerInterface $container
-    ) {}
+        private ContainerInterface $container,
+    ) {
+    }
 
     public function discoverRoutes(string $directory): void
     {
@@ -55,7 +56,7 @@ class RouteDiscovery
         $controllers = [];
 
         $iterator = new RecursiveIteratorIterator(
-            new RecursiveDirectoryIterator($directory)
+            new RecursiveDirectoryIterator($directory),
         );
 
         foreach ($iterator as $file) {
@@ -76,7 +77,7 @@ class RouteDiscovery
             // Autoloader is bootstrapped per your setup; fail fast if mismatch.
             if (!class_exists($className)) {
                 throw new RuntimeException(
-                    "Controller class '{$className}' was found in '{$file->getPathname()}' but is not autoloadable."
+                    "Controller class '{$className}' was found in '{$file->getPathname()}' but is not autoloadable.",
                 );
             }
 
@@ -169,11 +170,11 @@ class RouteDiscovery
         $reflectionClass = new ReflectionClass($controllerClass);
 
         $classMiddleware = $this->getMiddlewareFromAttributes(
-            $reflectionClass->getAttributes(Middleware::class)
+            $reflectionClass->getAttributes(Middleware::class),
         );
 
         $classExcluded = $this->getExcludedMiddlewareFromAttributes(
-            $reflectionClass->getAttributes(WithoutMiddleware::class)
+            $reflectionClass->getAttributes(WithoutMiddleware::class),
         );
 
         foreach ($reflectionClass->getMethods(ReflectionMethod::IS_PUBLIC) as $method) {
@@ -191,10 +192,10 @@ class RouteDiscovery
 
             if ($routeAttrCount > 1) {
                 throw new RuntimeException(sprintf(
-                    "Multiple #[Route] attributes are not allowed. Found %d on %s::%s().",
+                    'Multiple #[Route] attributes are not allowed. Found %d on %s::%s().',
                     $routeAttrCount,
                     $controllerClass,
-                    $method->getName()
+                    $method->getName(),
                 ));
             }
 
@@ -206,11 +207,11 @@ class RouteDiscovery
             $finalPath = $this->buildRoutePath($route->prefix, $route->path);
 
             $methodMiddleware = $this->getMiddlewareFromAttributes(
-                $method->getAttributes(Middleware::class)
+                $method->getAttributes(Middleware::class),
             );
 
             $methodExcluded = $this->getExcludedMiddlewareFromAttributes(
-                $method->getAttributes(WithoutMiddleware::class)
+                $method->getAttributes(WithoutMiddleware::class),
             );
 
             // Build final middleware:
@@ -227,21 +228,21 @@ class RouteDiscovery
 
                 if (!isset($this->allowedHttpMethods[$httpMethod])) {
                     throw new RuntimeException(sprintf(
-                        "Invalid HTTP method '%s' on %s::%s(). Allowed: %s",
+                        'Invalid HTTP method \'%s\' on %s::%s(). Allowed: %s',
                         $httpMethodRaw,
                         $controllerClass,
                         $method->getName(),
-                        implode(', ', array_keys($this->allowedHttpMethods))
+                        implode(', ', array_keys($this->allowedHttpMethods)),
                     ));
                 }
 
                 $conflictKey = $httpMethod . ' ' . $finalPath;
                 if (isset($this->registered[$conflictKey])) {
                     throw new RuntimeException(sprintf(
-                        "Route conflict: '%s' is already registered (attempted again in %s::%s()).",
+                        'Route conflict: \'%s\' is already registered (attempted again in %s::%s()).',
                         $conflictKey,
                         $controllerClass,
-                        $method->getName()
+                        $method->getName(),
                     ));
                 }
                 $this->registered[$conflictKey] = true;
@@ -253,7 +254,7 @@ class RouteDiscovery
 
                 if ($route->name !== null && $route->name !== '') {
                     if (!method_exists($leagueRoute, 'setName')) {
-                        throw new RuntimeException("Route naming requested but route object does not support setName().");
+                        throw new RuntimeException('Route naming requested but route object does not support setName().');
                     }
                     $leagueRoute->setName($route->name);
                 }
@@ -291,20 +292,20 @@ class RouteDiscovery
 
         if (!class_exists($middlewareClass)) {
             throw new RuntimeException(
-                "Middleware class '{$middlewareClass}' does not exist (referenced by {$controllerClass}::{$methodName}() for {$routeKey})."
+                "Middleware class '{$middlewareClass}' does not exist (referenced by {$controllerClass}::{$methodName}() for {$routeKey}).",
             );
         }
 
         // Prefer has() if available; otherwise let get() throw.
         if (method_exists($this->container, 'has') && !$this->container->has($middlewareClass)) {
             throw new RuntimeException(
-                "Container has no entry for middleware '{$middlewareClass}' (referenced by {$controllerClass}::{$methodName}() for {$routeKey})."
+                "Container has no entry for middleware '{$middlewareClass}' (referenced by {$controllerClass}::{$methodName}() for {$routeKey}).",
             );
         }
     }
 
     /**
-     * @param array $middlewareAttributes
+     * @param array<\ReflectionAttribute<Middleware>> $middlewareAttributes
      * @return array<string>
      */
     private function getMiddlewareFromAttributes(array $middlewareAttributes): array
@@ -324,7 +325,7 @@ class RouteDiscovery
     }
 
     /**
-     * @param array $withoutMiddlewareAttributes
+     * @param array<\ReflectionAttribute<WithoutMiddleware>> $withoutMiddlewareAttributes
      * @return array<string>
      */
     private function getExcludedMiddlewareFromAttributes(array $withoutMiddlewareAttributes): array
@@ -345,7 +346,7 @@ class RouteDiscovery
 
     private function buildRoutePath(?string $prefix, string $routePath): string
     {
-        $prefix = trim((string)($prefix ?? ''), '/');
+        $prefix = trim((string) ($prefix ?? ''), '/');
         $routePath = trim($routePath, '/');
 
         if ($prefix === '' && $routePath === '') {

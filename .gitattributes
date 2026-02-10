@@ -1,0 +1,26 @@
+# Git export-ignore attributes
+# These files will NOT be included when users install via Composer
+# but will remain in the repository for contributors
+
+# Test files and directories
+/tests export-ignore
+
+# Testing and QA configuration files
+/.php-cs-fixer.php export-ignore
+/phpunit.xml export-ignore
+/phpstan.neon export-ignore
+
+# CI/CD and build scripts
+/.github export-ignore
+/docker-test.sh export-ignore
+
+# Documentation for contributors
+/TESTING.md export-ignore
+/AGENTS.md export-ignore
+
+# Git files
+/.gitattributes export-ignore
+/.gitignore export-ignore
+
+# Editor configuration
+/.editorconfig export-ignore
