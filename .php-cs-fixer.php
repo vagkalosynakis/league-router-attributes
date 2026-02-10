@@ -21,7 +21,6 @@ return (new PhpCsFixer\Config())
         'cast_spaces' => ['space' => 'single'],
         'concat_space' => ['spacing' => 'one'],
         'declare_strict_types' => true,
-        'type_declaration_spaces' => true,
         'no_unused_imports' => true,
         'no_whitespace_in_blank_line' => true,
         'ordered_imports' => [
